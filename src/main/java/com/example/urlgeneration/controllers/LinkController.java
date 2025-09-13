@@ -15,16 +15,14 @@ import java.util.Map;
 @RequestMapping("api/v1")
 public class LinkController {
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("links")
-    public LinkGenerateResponse generateLink(@RequestBody LinkGenerateRequest req){
+    public ResponseEntity<LinkGenerateResponse> generateLink(@RequestBody LinkGenerateRequest req) throws LinkException {
         Map<String, Object> user_data = new HashMap<>();
         user_data.put("name", req.getName());
         user_data.put("email", req.getEmail());
         user_data.put("contact_no", req.getContactNo());
-
         String token = TokenGenerator.generateToken(16);
-
-        return new LinkGenerateResponse(token, Instant.now());
+        LinkGenerateResponse response = new LinkGenerateResponse(token, Instant.now());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
