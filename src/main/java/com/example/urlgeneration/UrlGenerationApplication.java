@@ -1,4 +1,4 @@
-package com.example.url_generation;
+package com.example.urlgeneration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
