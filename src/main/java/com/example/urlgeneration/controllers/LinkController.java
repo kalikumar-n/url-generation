@@ -47,7 +47,7 @@ public class LinkController {
             String json = (String) redisTemplate.opsForValue().get(token);
             LinkValidatorResponse response = new LinkValidatorResponse("Successfully Validated", null);
 
-            return ResponseEntity.status(HttpStatus.FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } else {
             LinkValidatorResponse response = new LinkValidatorResponse("Token is invalid or expired", "ERR_001");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
