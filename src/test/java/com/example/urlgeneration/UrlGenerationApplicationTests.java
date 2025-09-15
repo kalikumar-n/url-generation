@@ -1,4 +1,4 @@
-package com.example.url_generation;
+package com.example.urlgeneration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
