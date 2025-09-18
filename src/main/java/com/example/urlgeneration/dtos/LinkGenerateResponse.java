@@ -2,5 +2,7 @@ package com.example.urlgeneration.dtos;
 
 import java.time.Instant;
 
-public record LinkGenerateResponse(String token, Instant expiresAt) {}
+public record LinkGenerateResponse(String token, Instant expiresAt, String secureUrl) {
+
+}
 
