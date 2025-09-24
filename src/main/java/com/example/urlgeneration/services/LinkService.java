@@ -51,7 +51,8 @@ public class LinkService {
     }
 
     public LinkValidatorResponse validateLink(String token){
-        if (Boolean.TRUE.equals(redisTemplate.hasKey(token))) {
+        UrlToken tokenRecord = urlTokenRepository.findByToken(token);
+        if (tokenRecord!=null) {
             return new LinkValidatorResponse("Successfully Validated", null);
         } else {
             return new LinkValidatorResponse("Token is invalid or expired", "ERR_001");

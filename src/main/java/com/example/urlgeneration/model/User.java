@@ -12,6 +12,8 @@ import java.util.List;
 @Setter
 @ToString(exclude = "tokens")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "users")
 public class User {

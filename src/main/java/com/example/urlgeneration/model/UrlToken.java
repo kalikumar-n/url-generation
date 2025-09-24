@@ -11,6 +11,8 @@ import java.time.Instant;
 @Table(name= "url_token")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString(exclude = "user")
 public class UrlToken {
