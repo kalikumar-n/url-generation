@@ -10,8 +10,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "tokens")
 @Entity
+@Builder
 @Table(name = "users")
 public class User {
 
@@ -37,6 +38,24 @@ public class User {
     @Column(name = "updated_at", nullable = false, insertable = false)
     private Instant updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<UrlToken> tokens;
+    private List<UrlToken> tokens = new ArrayList<>();
+
+
+    // --- helper methods ---
+    public void addToken(UrlToken token) {
+        if (token == null) return;
+        if (!this.tokens.contains(token)) {
+            this.tokens.add(token);
+        }
+        token.setUser(this);
+    }
+
+    public void removeToken(UrlToken token) {
+        if (token == null) return;
+        this.tokens.remove(token);
+        token.setUser(null);
+    }
+
 }
