@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.math.BigInteger;
 import java.time.Instant;
 
 @Entity
@@ -32,4 +31,8 @@ public class UrlToken {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @NotNull
+    @Column(name= "active", nullable = false)
+    private Boolean active;
 }

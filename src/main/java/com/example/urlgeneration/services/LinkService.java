@@ -4,23 +4,22 @@ import com.example.urlgeneration.dtos.LinkGenerateResponse;
 import com.example.urlgeneration.dtos.LinkValidatorResponse;
 import com.example.urlgeneration.model.UrlToken;
 import com.example.urlgeneration.model.User;
+import com.example.urlgeneration.projections.UrlTokenProjection;
 import com.example.urlgeneration.repositories.UrlTokenRepository;
 import com.example.urlgeneration.repositories.UserRepository;
 import com.example.urlgeneration.utils.TokenGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class LinkService {
 
-    private final RedisTemplate<String, String> redisTemplate;
-    private final ObjectMapper objectMapper;
     private final UrlTokenRepository urlTokenRepository;
     private final UserRepository userRepository;
 
@@ -30,9 +29,7 @@ public class LinkService {
     @Value("${app.link.expiry}")
     private long expiryMinutes;
 
-    public LinkService(RedisTemplate<String, String> redisTemplate, ObjectMapper objectMapper, UrlTokenRepository urlTokenRepository, UserRepository userRepository) {
-        this.redisTemplate = redisTemplate;
-        this.objectMapper = objectMapper;
+    public LinkService(UrlTokenRepository urlTokenRepository, UserRepository userRepository) {
         this.urlTokenRepository = urlTokenRepository;
         this.userRepository = userRepository;
     }
@@ -59,6 +56,10 @@ public class LinkService {
         }
     }
 
+    public List<UrlTokenProjection> listTokens(Boolean status){
+        return urlTokenRepository.findByStatus(status);
+    }
+
     private User createUser(LinkGenerateRequest req){
         User user = User.builder()
                         .name(req.getName())
@@ -73,6 +74,7 @@ public class LinkService {
                                     .token(token)
                                     .expiredAt(Instant.now().plus(expiryMinutes, ChronoUnit.MINUTES))
                                     .user(user)
+                                    .active(true)
                                     .build();
 
         return urlTokenRepository.save(urlToken);
