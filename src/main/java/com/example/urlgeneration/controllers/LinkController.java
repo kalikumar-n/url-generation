@@ -46,9 +46,9 @@ public class LinkController {
         return ResponseEntity.ok(linkService.listTokens(active));
     }
 
-    @PostMapping("links/deactivatetoken/{id}")
+    @PutMapping("links/{id}/deactivate")
     public ResponseEntity<String>deactivateToken(@PathVariable Long id){
         linkService.deactivateToken(id);
-        return ResponseEntity.accepted().body("Token deactivated successfully");
+        return ResponseEntity.accepted().body("URL deactivated successfully");
     }
 }

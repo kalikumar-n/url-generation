@@ -9,7 +9,7 @@ import com.example.urlgeneration.repositories.UrlTokenRepository;
 import com.example.urlgeneration.repositories.UserRepository;
 import com.example.urlgeneration.utils.TokenGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -47,10 +47,11 @@ public class LinkService {
         return new LinkGenerateResponse(urlToken.getId(), token, urlToken.getExpiredAt(), url);
     }
 
+    @Transactional(readOnly = true)
     public LinkValidatorResponse validateLink(String token){
         UrlToken tokenRecord = urlTokenRepository.findByToken(token);
 
-        if (tokenRecord != null && tokenRecord.getExpiredAt().isAfter(Instant.now())) {
+        if (tokenRecord != null && tokenRecord.getExpiredAt().isAfter(Instant.now()) && tokenRecord.getActive()) {
             return new LinkValidatorResponse("Successfully Validated", null);
         } else {
             return new LinkValidatorResponse("Token is invalid or expired", "ERR_001");
