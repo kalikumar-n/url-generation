@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: "URL Generation"
+
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 5s
+
+app:
+  link:
+    base-url: "https://dcb-bank.com/onboard-link"
+    expiry: 10
