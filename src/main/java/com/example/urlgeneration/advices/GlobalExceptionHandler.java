@@ -1,4 +1,4 @@
-package com.example.urlgeneration.controllers;
+package com.example.urlgeneration.advices;
 
 import com.example.urlgeneration.dtos.ErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;

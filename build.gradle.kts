@@ -18,6 +18,14 @@ repositories {
 	mavenCentral()
 }
 
+val springCloudVersion = "2025.0.0"
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+	}
+}
+
 dependencies {
 	// Starter dependencies
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -35,7 +43,8 @@ dependencies {
 	compileOnly("org.projectlombok:lombok:1.18.34")
 	annotationProcessor("org.projectlombok:lombok:1.18.34")
 
-
+	// Feign Client
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
 	// Testing dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

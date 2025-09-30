@@ -34,6 +34,7 @@ public class LinkService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public LinkGenerateResponse generateLink(LinkGenerateRequest req) throws JsonProcessingException {
         String token = TokenGenerator.generateToken(16);
         String url = baseUrl + "?token=" + token;

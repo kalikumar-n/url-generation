@@ -29,3 +29,9 @@ app:
   link:
     base-url: "https://dcb-bank.com/onboard-link"
     expiry: 10
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN}
+  base-url: https://api.twilio.com/2010-04-01
+  from-number: "+16014364369"
