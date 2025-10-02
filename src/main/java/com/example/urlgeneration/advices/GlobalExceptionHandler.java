@@ -30,8 +30,8 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
-                exp.getMessage(),
-                "URLGEN_1001",
+                "Data is duplicated, Please do re-check",
+                "URLGEN_1002",
                 Instant.now()
         );
 
