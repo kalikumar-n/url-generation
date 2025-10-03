@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-1-add-user-id-column
+      author: kali-dev
+      preConditions:
+        onFail: MARK_RAN
+        preConditions:
+          - tableExists:
+              tableName: url_token
+          - not:
+              - columnExists:
+                  tableName: url_token
+                  columnName: user_id
+      changes:
+        - addColumn:
+            tableName: url_token
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+        - createIndex:
+            tableName: url_token
+            indexName: idx_urltoken_user_id
+            columns:
+              - column:
+                  name: user_id
+      rollback:
+        - dropIndex:
+            tableName: url_token
+            indexName: idx_urltoken_user_id
+        - dropColumn:
+            tableName: url_token
+            columnName: user_id
+
+  - changeSet:
+      id: 003-2-add-foreign-key
+      author: kali-dev
+      preConditions:
+        onFail: MARK_RAN
+        preConditions:
+          - tableExists:
+              tableName: url_token
+          - tableExists:
+              tableName: users
+          - columnExists:
+              tableName: url_token
+              columnName: user_id
+          - not:
+              - foreignKeyConstraintExists:
+                  foreignKeyName: fk_urltoken_user50
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: url_token
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_urltoken_user50
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+      rollback:
+        - dropForeignKeyConstraint:
+            baseTableName: url_token
+            constraintName: fk_urltoken_user50

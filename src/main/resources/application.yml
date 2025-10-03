@@ -1,0 +1,37 @@
+# Spring Configs
+spring:
+  application:
+    name: "URL Generation"
+
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 5s
+
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/ORCLPDB1
+    username: url_generation
+    password: UrlGenPassword
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.Oracle12cDialect
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.yaml
+    default-schema: URL_GENERATION
+
+# App level custom config
+app:
+  link:
+    base-url: "https://dcb-bank.com/onboard-link"
+    expiry: 10
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN}
+  base-url: https://api.twilio.com/2010-04-01
+  from-number: "+16014364369"

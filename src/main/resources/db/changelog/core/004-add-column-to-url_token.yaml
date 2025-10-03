@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004
+      author: kali-dev
+      preConditions:
+        onFail: MARK_RAN
+        preConditions:
+          - tableExists:
+              tableName: url_token
+      changes:
+        - addColumn:
+            tableName: url_token
+            columns:
+              - column:
+                  name: active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
